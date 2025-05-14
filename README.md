@@ -3,8 +3,7 @@
 
 Cloud Security Scout is a lightweight, serverless AWS security monitoring tool built with AWS Lambda, DynamoDB, SES, and CloudFormation. It automatically scans your AWS environment for critical misconfigurations and sends email alerts to help maintain compliance with the CIS AWS Foundations Benchmark**.
 
-🎥 [Watch Demo Video]
-https://drive.google.com/file/d/19tMXgoVNVHXtNr6z8SbhbgYp5RsvI2SV/view?usp=drive_link
+
 
 ---
 
@@ -34,6 +33,8 @@ https://drive.google.com/file/d/19tMXgoVNVHXtNr6z8SbhbgYp5RsvI2SV/view?usp=drive
 ````
 
 ---
+🎥 [Watch Demo Video]
+https://drive.google.com/file/d/19tMXgoVNVHXtNr6z8SbhbgYp5RsvI2SV/view?usp=drive_link
 
 ## 🛠️ Tech Stack
 
