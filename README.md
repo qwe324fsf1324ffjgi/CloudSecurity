@@ -1,6 +1,4 @@
-Here's a **`README.md`** file for your project, with the **S3 public access check removed**, as requested. It includes a clean structure, overview, architecture, tech stack, deployment details, and usage instructions.
 
----
 
 ````markdown
 # 🔒 Cloud Security Scout
@@ -131,13 +129,7 @@ Upon deployment, CloudFormation outputs:
 
 ## 🤝 Contributing
 
-Pull requests are welcome! For major changes, please open an issue first to discuss what you’d like to change.
-
----
-
-## 📜 License
-
-MIT
+Pull requests are welcome! For major changes, please open an issue first to discuss what you’d like to change
 
 ---
 
@@ -148,15 +140,4 @@ MIT
 💻 [GitHub](https://github.com/zerahabba1)
 📧 [Send Email](https://mail.google.com/mail/?view=cm&fs=1&to=zerahabba1@gmail.com)
 
-```
-
----
-
-Let me know if you'd like:
-
-- A GitHub Actions CI/CD workflow
-- A PDF version of the README
-- A project logo or architecture diagram image
-
-Happy to help you make this fully production-ready or polished for recruiters!
 ```
