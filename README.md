@@ -1,20 +1,21 @@
 ````markdown
 # 🔒 Cloud Security Scout
 
-Cloud Security Scout is a lightweight, serverless AWS security monitoring tool built with **AWS Lambda**, **DynamoDB**, **SES**, and **CloudFormation**. It automatically scans your AWS environment for critical misconfigurations and sends email alerts to help maintain compliance with the **CIS AWS Foundations Benchmark**.
+Cloud Security Scout is a lightweight, serverless AWS security monitoring tool built with AWS Lambda, DynamoDB, SES, and CloudFormation. It automatically scans your AWS environment for critical misconfigurations and sends email alerts to help maintain compliance with the CIS AWS Foundations Benchmark**.
 
-🎥 **[Watch Demo Video](https://drive.google.com/file/d/19tMXgoVNVHXtNr6z8SbhbgYp5RsvI2SV/view?usp=drive_link)**
+🎥 [Watch Demo Video]
+https://drive.google.com/file/d/19tMXgoVNVHXtNr6z8SbhbgYp5RsvI2SV/view?usp=drive_link
 
 ---
 
 ## 🚀 Features
 
-- Detects **insecure security group rules** (e.g., SSH/RDP open to the world).
-- Flags **unencrypted RDS instances**.
-- Stores findings in a **DynamoDB** table with timestamps.
-- Sends **automated email alerts** using **Amazon SES**.
-- Runs automatically every 6 minutes via **EventBridge rule**.
-- Fully deployable with **AWS CloudFormation**.
+- Detects insecure security group rules (e.g., SSH/RDP open to the world).
+- Flags unencrypted RDS instances.
+- Stores findings in a DynamoDB table with timestamps.
+- Sends automated email alerts using Amazon SES.
+- Runs automatically every 6 minutes via EventBridge rule.
+- Fully deployable with AWS CloudFormation.
 
 ---
 
