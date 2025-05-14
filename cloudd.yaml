@@ -1,0 +1,96 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Cloud Security Scout Deployment (with SES Alerts)
+
+Resources:
+  CloudSecurityScoutLambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: 'Allow'
+            Principal:
+              Service: 'lambda.amazonaws.com'
+            Action: 'sts:AssumeRole'
+      Policies:
+        - PolicyName: CloudSecurityScoutPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: 'Allow'
+                Action:
+                  - s3:ListAllMyBuckets
+                  - s3:GetBucketAcl
+                  - s3:GetObject
+                  - s3:PutObject
+                  - ec2:DescribeSecurityGroups
+                  - rds:DescribeDBInstances
+                  - dynamodb:PutItem
+                  - ses:SendEmail
+                  - ses:SendRawEmail
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: '*'
+
+  CloudSecurityScoutLambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub CloudSecurityScoutFunction-${AWS::StackName}
+      Handler: index.lambda_handler
+      Role: !GetAtt CloudSecurityScoutLambdaRole.Arn
+      Runtime: python3.9
+      Timeout: 300
+      MemorySize: 512
+      Code:
+        S3Bucket: cloud-security-zerah1  # Replace with actual bucket name
+        S3Key: index.zip                # Replace with actual code package name
+
+  CloudSecurityFindingsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: 'CloudSecurityFindings'
+      AttributeDefinitions:
+        - AttributeName: 'id'
+          AttributeType: 'S'
+        - AttributeName: 'timestamp'
+          AttributeType: 'S'
+      KeySchema:
+        - AttributeName: 'id'
+          KeyType: 'HASH'
+        - AttributeName: 'timestamp'
+          KeyType: 'RANGE'
+      BillingMode: PAY_PER_REQUEST
+
+  CloudSecurityScoutEventBridgeRule:
+    Type: AWS::Events::Rule
+    Properties:
+      Name: 'CloudSecurityScoutSchedule'
+      ScheduleExpression: 'rate(6 minutes)'
+      Targets:
+        - Arn: !GetAtt CloudSecurityScoutLambdaFunction.Arn
+          Id: 'CloudSecurityScoutLambdaTarget'
+
+  LambdaInvokePermission:
+    Type: AWS::Lambda::Permission
+    DependsOn:
+      - CloudSecurityScoutEventBridgeRule
+      - CloudSecurityScoutLambdaFunction
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      FunctionName: !Ref CloudSecurityScoutLambdaFunction
+      Principal: 'events.amazonaws.com'
+      SourceArn: !GetAtt CloudSecurityScoutEventBridgeRule.Arn
+
+Outputs:
+  LambdaFunctionArn:
+    Description: 'ARN of the Lambda function'
+    Value: !GetAtt CloudSecurityScoutLambdaFunction.Arn
+
+  DynamoDBTableName:
+    Description: 'Name of the DynamoDB table storing findings'
+    Value: !Ref CloudSecurityFindingsTable
+
+  SESNotification:
+    Description: 'SES is used for email alerts. Ensure sender/recipient are verified in SES.'
+    Value: 'SES Email Alerts Enabled'
